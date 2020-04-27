@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+<context:component-scan base-package="com"/>
+
+    <bean id="route" class="com.lesson2.hw1.Route">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="steps">
+            <list>
+                <ref bean="step"/>
+            </list>
+        </constructor-arg>
+    </bean>
+    <bean id="service" class="com.lesson2.hw1.Service">
+    <constructor-arg name="id" value="1"/>
+    <constructor-arg name="name" value="TestService"/>
+    <constructor-arg name="paramsToCall">
+        <list>
+            <value>param1</value>
+            <value>param2</value>
+        </list>
+    </constructor-arg>
+    </bean>
+    <bean id="step" class="com.lesson2.hw1.Step">
+        <constructor-arg name="id" value="1"/>
+        <constructor-arg name="serviceFrom" ref="service"/>
+        <constructor-arg name="serviceTo" ref="service"/>
+        <constructor-arg name="paramsServiceFrom">
+            <map>
+                <entry key-ref="service" >
+                    <list>
+                        <value>param1</value>
+                    </list>
+                </entry>
+            </map>
+        </constructor-arg>
+        <constructor-arg name="paramsServiceTo">
+            <map>
+                <entry key-ref="service" >
+                    <list>
+                        <value>param2</value>
+                    </list>
+                </entry>
+            </map>
+        </constructor-arg>
+    </bean>
+
+</beans>
