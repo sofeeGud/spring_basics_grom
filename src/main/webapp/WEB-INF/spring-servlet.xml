@@ -47,4 +47,8 @@
         </constructor-arg>
     </bean>
 
+    <bean id="itemDAO" class="com.lesson2.hw2.ItemDAO"></bean>
+    <bean id="itemService" class="com.lesson2.hw2.ItemService"></bean>
+    <bean id="itemController" class="com.lesson2.hw2.ItemController"></bean>
+
 </beans>
