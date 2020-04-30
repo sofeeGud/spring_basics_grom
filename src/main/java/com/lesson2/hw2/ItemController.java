@@ -13,10 +13,12 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/findById/{id}", produces = "text/plain")
     public @ResponseBody
-    String findById(@PathVariable String  id) {
+    String findById(@PathVariable String  id) throws Exception{
         try {
             return itemService.findById(Long.parseLong(id)).toString();
-        } catch (Exception e) {
+        } catch (HttpExсeption e) {
+            if (itemService.findById(Long.parseLong(id))==null)
+                throw new HttpExсeption(404,"Not found");
             return e.getMessage();
         }
     }
