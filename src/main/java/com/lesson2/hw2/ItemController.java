@@ -1,7 +1,10 @@
 package com.lesson2.hw2;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,49 +16,64 @@ public class ItemController {
 
     @RequestMapping(method = RequestMethod.GET, value = "/findById/{id}", produces = "text/plain")
     public @ResponseBody
-    String findById(@PathVariable String  id) throws Exception{
+    ResponseEntity<String> findById(@PathVariable String id) {
         try {
-            return itemService.findById(Long.parseLong(id)).toString();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(itemService.findById(Long.parseLong(id)).toString());
         } catch (HttpExсeption e) {
-            if (itemService.findById(Long.parseLong(id))==null)
-                throw new HttpExсeption(404,"Not found");
-            return e.getMessage();
+            return ResponseEntity.badRequest()
+                    .body(e.getStatusCode() + " " + e.getMessage());
         }
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/save", produces = "text/json")
     public @ResponseBody
-    String save(@RequestBody String json) {
+    ResponseEntity<String> save(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-          return itemService.save(item).toString();
-        } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(itemService.save(item).toString());
+        } catch (HttpExсeption e) {
+            return ResponseEntity.badRequest()
+                    .body(e.getStatusCode() + " " + e.getMessage());
+        } catch (JsonProcessingException e) {
+            return new ResponseEntity<>(
+                    "Error read", HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/update", produces = "text/plain")
     public @ResponseBody
-    String update(@RequestBody String json) {
+    ResponseEntity<String> update(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-            return  itemService.update(item).toString();
-        } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(itemService.update(item).toString());
+        } catch (HttpExсeption e) {
+            return ResponseEntity.badRequest()
+                    .body(e.getStatusCode() + " " + e.getMessage());
+        } catch (JsonProcessingException e) {
+            return new ResponseEntity<>(
+                    "Error read", HttpStatus.BAD_REQUEST);
         }
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/delete", produces = "text/plain")
     public @ResponseBody
-    String delete(@RequestBody String json) {
+    ResponseEntity<String> delete(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-            return  itemService.delete(item.getId()).toString();
-        } catch (Exception e) {
-            return e.getMessage();
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(itemService.delete(item.getId()).toString());
+        } catch (HttpExсeption e) {
+            return ResponseEntity.badRequest()
+                    .body(e.getStatusCode() + " " + e.getMessage());
+        } catch (JsonProcessingException e) {
+            return new ResponseEntity<>(
+                    "Error read", HttpStatus.BAD_REQUEST);
         }
     }
 }

@@ -12,7 +12,7 @@ public class ItemDAO {
     private SessionFactory sessionFactory;
 
 
-    public Item save(Item item) throws Exception {
+    public Item save(Item item){
         Transaction transaction = null;
         try (Session session = createSessionFactory().openSession()) {
             transaction = session.getTransaction();
@@ -28,11 +28,11 @@ public class ItemDAO {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
-            throw new Exception("Save "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
+            throw new HibernateException("Save "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
         }
     }
 
-    public Item update(Item item) throws Exception{
+    public Item update(Item item){
         Transaction transaction = null;
         try (Session session = createSessionFactory().openSession()) {
             transaction = session.getTransaction();
@@ -47,11 +47,11 @@ public class ItemDAO {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
-            throw new Exception("Update "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
+            throw new HibernateException("Update "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
         }
     }
 
-    public Item delete(Item item) throws Exception{
+    public Item delete(Item item){
         Transaction transaction = null;
         try (Session session = createSessionFactory().openSession()) {
             transaction = session.getTransaction();
@@ -65,21 +65,21 @@ public class ItemDAO {
         } catch (HibernateException e) {
             if (transaction != null)
                 transaction.rollback();
-            throw new Exception("Delete "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
+            throw new HibernateException("Delete "+item.getClass().getSimpleName()+": "+item.toString()+" failed"+e.getMessage());
         }
     }
 
-    public Item findById(Long id) throws Exception{
+    public Item findById(Long id) throws HibernateException{
         try (Session session = createSessionFactory().openSession()) {
 
             return session.get(Item.class, id);
 
         } catch (HibernateException e) {
-            throw new Exception(getClass().getSimpleName() + "-findById: " + id + " failed. " + e.getMessage());
+            throw new HibernateException(getClass().getSimpleName() + "-findById: " + id + " failed. " + e.getMessage());
         }
     }
 
-    public Item findByName(String name) throws Exception{
+    public Item findByName(String name) throws HibernateException{
         try (Session session = createSessionFactory().openSession()) {
 
             return (Item) session.createSQLQuery("SELECT * FROM ITEM WHERE NAME = :name")
@@ -87,7 +87,7 @@ public class ItemDAO {
                     .addEntity(Item.class).getSingleResult();
 
         } catch (HibernateException e) {
-            throw new Exception(getClass().getSimpleName()+"-findByName: "+name+" failed. "+e.getMessage());
+            throw new HibernateException(getClass().getSimpleName()+"-findByName: "+name+" failed. "+e.getMessage());
         } catch (Exception e){
             return null;
         }
