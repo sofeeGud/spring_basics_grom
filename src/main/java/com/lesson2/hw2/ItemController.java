@@ -22,7 +22,7 @@ public class ItemController {
         } catch (HttpClientErrorException e) {
             return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
         } catch (Exception e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
