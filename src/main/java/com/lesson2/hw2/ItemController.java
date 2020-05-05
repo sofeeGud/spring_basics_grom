@@ -1,12 +1,12 @@
 package com.lesson2.hw2;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Controller
 public class ItemController {
@@ -18,11 +18,11 @@ public class ItemController {
     public @ResponseBody
     ResponseEntity<String> findById(@PathVariable String id) {
         try {
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(itemService.findById(Long.parseLong(id)).toString());
-        } catch (HttpExсeption e) {
-            return ResponseEntity.badRequest()
-                    .body(e.getStatusCode() + " " + e.getMessage());
+            return new ResponseEntity<>(itemService.findById(Long.parseLong(id)).toString(), HttpStatus.OK);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -32,14 +32,11 @@ public class ItemController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(itemService.save(item).toString());
-        } catch (HttpExсeption e) {
-            return ResponseEntity.badRequest()
-                    .body(e.getStatusCode() + " " + e.getMessage());
-        } catch (JsonProcessingException e) {
-            return new ResponseEntity<>(
-                    "Error read", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(itemService.save(item).toString(), HttpStatus.OK);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -49,14 +46,11 @@ public class ItemController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(itemService.update(item).toString());
-        } catch (HttpExсeption e) {
-            return ResponseEntity.badRequest()
-                    .body(e.getStatusCode() + " " + e.getMessage());
-        } catch (JsonProcessingException e) {
-            return new ResponseEntity<>(
-                    "Error read", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(itemService.update(item).toString(), HttpStatus.OK);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -66,14 +60,11 @@ public class ItemController {
         try {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(itemService.delete(item.getId()).toString());
-        } catch (HttpExсeption e) {
-            return ResponseEntity.badRequest()
-                    .body(e.getStatusCode() + " " + e.getMessage());
-        } catch (JsonProcessingException e) {
-            return new ResponseEntity<>(
-                    "Error read", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(itemService.delete(item.getId()).toString(), HttpStatus.OK);
+        } catch (HttpClientErrorException e) {
+            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }
