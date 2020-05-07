@@ -19,8 +19,8 @@ public class ItemController {
     ResponseEntity<String> findById(@PathVariable String id) {
         try {
             return new ResponseEntity<>(itemService.findById(Long.parseLong(id)).toString(), HttpStatus.OK);
-        } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -33,8 +33,8 @@ public class ItemController {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
             return new ResponseEntity<>(itemService.save(item).toString(), HttpStatus.OK);
-        } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -47,8 +47,8 @@ public class ItemController {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
             return new ResponseEntity<>(itemService.update(item).toString(), HttpStatus.OK);
-        } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -61,8 +61,8 @@ public class ItemController {
             ObjectMapper mapper = new ObjectMapper();
             Item item = mapper.readValue(json, Item.class);
             return new ResponseEntity<>(itemService.delete(item.getId()).toString(), HttpStatus.OK);
-        } catch (HttpClientErrorException e) {
-            return new ResponseEntity<>(e.getMessage(), e.getStatusCode());
+        } catch (BadRequestException e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
