@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 
+
 @Entity
-@Table(name = "FILE")
+@Table(name = "FILES")
 public class File {
     @JsonProperty("id")
     private long id;
@@ -15,7 +16,10 @@ public class File {
     private String format;
     @JsonProperty("size")
     private long size;
+
     @JsonProperty("storage")
+    @ManyToOne
+    @JoinColumn(name="STORAGE_ID", nullable = false)
     Storage storage;
 
     @Id
@@ -57,7 +61,8 @@ public class File {
         this.size = size;
     }
 
-    @Column(name = "STORAGE_ID")
+    @ManyToOne
+    @JoinColumn(name="STORAGE_ID", nullable = false)
     public Storage getStorage() {
         return storage;
     }

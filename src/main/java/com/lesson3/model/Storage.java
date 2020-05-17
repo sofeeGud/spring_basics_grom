@@ -3,7 +3,6 @@ package com.lesson3.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
-import java.util.Arrays;
 
 @Entity
 @Table(name = "STORAGE")
@@ -11,7 +10,7 @@ public class Storage {
     @JsonProperty("id")
     private long id;
     @JsonProperty("formatsSupported")
-    private String[] formatsSupported;
+    private String formatsSupported;
     @JsonProperty("storageCountry")
     private String storageCountry;
     @JsonProperty("storageSize")
@@ -30,11 +29,11 @@ public class Storage {
     }
 
     @Column(name = "FORMATS_SUPPORTED")
-    public String[] getFormatsSupported() {
+    public String getFormatsSupported() {
         return formatsSupported;
     }
 
-    public void setFormatsSupported(String[] formatsSupported) {
+    public void setFormatsSupported(String formatsSupported) {
         this.formatsSupported = formatsSupported;
     }
 
@@ -60,7 +59,7 @@ public class Storage {
     public String toString() {
         return "Storage{" +
                 "id=" + id +
-                ", formatsSupported=" + Arrays.toString(formatsSupported) +
+                ", formatsSupported=" + formatsSupported +
                 ", storageCountry='" + storageCountry + '\'' +
                 ", storageSize=" + storageSize +
                 '}';
@@ -75,15 +74,14 @@ public class Storage {
 
         if (id != storage.id) return false;
         if (storageSize != storage.storageSize) return false;
-        // Probably incorrect - comparing Object[] arrays with Arrays.equals
-        if (!Arrays.equals(formatsSupported, storage.formatsSupported)) return false;
+        if (!formatsSupported.equals(storage.formatsSupported)) return false;
         return storageCountry.equals(storage.storageCountry);
     }
 
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
-        result = 31 * result + Arrays.hashCode(formatsSupported);
+        result = 31 * result + formatsSupported.hashCode();
         result = 31 * result + storageCountry.hashCode();
         result = 31 * result + (int) (storageSize ^ (storageSize >>> 32));
         return result;
