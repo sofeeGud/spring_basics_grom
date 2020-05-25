@@ -1,6 +1,8 @@
 package com.lesson3.DAO;
 
+import com.lesson3.BadRequestException;
 import com.lesson3.model.File;
+import com.lesson3.model.Storage;
 import javassist.NotFoundException;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -95,5 +97,25 @@ public class FileDAO implements DAO<File>{
         if (sessionFactory == null)
             sessionFactory = new Configuration().configure().buildSessionFactory();
         return sessionFactory;
+    }
+
+
+
+    public File put(Storage storage, File file) throws Exception {
+
+        Session session = sessionFactory.getCurrentSession();
+        Query<File> query = session.createQuery("UPDATE File file SET file.storage.id = : storageId WHERE file.id = : fileId", File.class);
+        query.setParameter("fileId", file.getId());
+        query.setParameter("storageId", storage.getId());
+        return query.getSingleResult();
+    }
+
+
+    public long getFilesSize(Long storageId) {
+        Session session = sessionFactory.getCurrentSession();
+        Query<Long> query = session.createQuery("SELECT sum(file.size) as totalSize FROM File file WHERE file.storage.id = : storageId");
+
+        query.setParameter("storageId", storageId);
+        return query.getSingleResult();
     }
 }

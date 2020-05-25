@@ -3,6 +3,7 @@ package com.lesson3.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lesson3.BadRequestException;
 import com.lesson3.model.File;
+import com.lesson3.model.Storage;
 import com.lesson3.service.FileService;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,10 +72,11 @@ public class FileController {
     }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/deleteFile/{id}")
-    public ResponseEntity<String> delete(@PathVariable String id) {
+    public ResponseEntity<String> delete(@RequestParam(value = "storageId") long storageId,
+                                         @RequestParam(value = "fileId") long fileId) {
 
         try {
-            fileService.delete(Long.parseLong(id));
+            fileService.delete(storageId, fileId);
             return new ResponseEntity<>("Deleted successfully", HttpStatus.OK);
         } catch (Exception e) {
 
@@ -83,12 +85,12 @@ public class FileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/putFile")
-    public ResponseEntity<File> putFile(@RequestParam(value = "storageId") long storageId,
-                                        @RequestParam(value = "fileId") long fileId) {
+    public ResponseEntity<File> putFile(@RequestParam(value = "storage") Storage storage,
+                                        @RequestParam(value = "file") File file) {
 
         try {
 
-            return new ResponseEntity<>(fileService.put(storageId, fileId), HttpStatus.OK);
+            return new ResponseEntity<>(fileService.put(file, storage), HttpStatus.OK);
         } catch (NotFoundException e) {
 
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -141,12 +143,12 @@ public class FileController {
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/transferFile")
-    public ResponseEntity<String> transferAll(@RequestParam(value = "from") long stIdFrom,
+    public ResponseEntity<String> transferFile(@RequestParam(value = "from") long stIdFrom,
                                               @RequestParam(value = "to") long stIdTo,
                                               @RequestParam(value = "fileId") long fileId) {
         try {
 
-            fileService.transferFile(stIdFrom, stIdTo, fileId);
+            fileService.transferFile(stIdTo, fileId);
 
             return new ResponseEntity<>("File was transferred successfully", HttpStatus.OK);
         } catch (BadRequestException e) {

@@ -31,4 +31,6 @@ public class Storage {
     @Column(name = "STORAGE_SIZE")
     private long storageSize;
 
+
+
 }
