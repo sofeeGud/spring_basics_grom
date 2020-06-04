@@ -5,9 +5,10 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
-
+@Repository
 public class ItemDAO {
     private SessionFactory sessionFactory;
 

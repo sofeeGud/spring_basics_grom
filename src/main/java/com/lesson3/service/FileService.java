@@ -7,8 +7,9 @@ import com.lesson3.model.File;
 import com.lesson3.model.Storage;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class FileService {
 
     private FileDAO fileDAO;
@@ -16,7 +17,6 @@ public class FileService {
 
     @Autowired
     public FileService(FileDAO fileDAO, StorageDAO storageDAO) {
-
         this.fileDAO = fileDAO;
         this.storageDAO = storageDAO;
     }

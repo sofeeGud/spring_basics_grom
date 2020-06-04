@@ -8,8 +8,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+
 @ToString
 @EqualsAndHashCode
 @Entity
@@ -36,5 +35,43 @@ public class File {
     @JoinColumn(name="STORAGE_ID", nullable = false)
     Storage storage;
 
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getFormat() {
+        return format;
+    }
+
+    public void setFormat(String format) {
+        this.format = format;
+    }
+
+    public long getSize() {
+        return size;
+    }
+
+    public void setSize(long size) {
+        this.size = size;
+    }
+
+    public Storage getStorage() {
+        return storage;
+    }
+
+    public void setStorage(Storage storage) {
+        this.storage = storage;
+    }
 }

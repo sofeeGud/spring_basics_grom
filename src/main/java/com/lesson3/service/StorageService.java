@@ -5,7 +5,9 @@ import com.lesson3.DAO.StorageDAO;
 import com.lesson3.model.Storage;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class StorageService{
 
     private StorageDAO storageDAO;

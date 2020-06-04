@@ -8,7 +8,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.springframework.stereotype.Repository;
 
+@Repository
 
 public class StorageDAO implements DAO<Storage> {
     private SessionFactory sessionFactory;
