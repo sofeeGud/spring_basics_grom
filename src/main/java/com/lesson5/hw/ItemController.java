@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping(value = "/item")
 public class ItemController {
 
     private ItemDAO itemDAO;
@@ -18,7 +19,8 @@ public class ItemController {
         this.itemDAO = itemDAO;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/saveI")
+
+    @RequestMapping(method = RequestMethod.POST, value = "/save")
     public ResponseEntity<String> save(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
