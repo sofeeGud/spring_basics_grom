@@ -8,16 +8,11 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.*;
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
-
 @Repository
-@Transactional
 public class FlightDAO extends GeneralDAOImpl<Flight> {
-
-    private static final String SQL_FLIGHTS_BY_DATE = "SELECT * FROM FLIGHT";
 
     @PersistenceContext
     private EntityManager entityManager;

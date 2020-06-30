@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @RequestMapping(value = "/passenger")
 public class PassengerController extends GeneralController<Passenger> {
-    private PassengerDAO passengerDAO;
     private PassengerService passengerService;
 
     @Autowired
-    public PassengerController(PassengerDAO passengerDAO, PassengerService passengerService) {
-        this.passengerDAO = passengerDAO;
+    public PassengerController(PassengerService passengerService) {
         this.passengerService = passengerService;
     }
 
@@ -54,7 +52,7 @@ public class PassengerController extends GeneralController<Passenger> {
     @RequestMapping(method = RequestMethod.DELETE, value = "delete/{id}", produces = "text/plain")
     public ResponseEntity<String> delete(@PathVariable String id) {
         try {
-            passengerDAO.delete(Long.parseLong(id));
+            passengerService.delete(Long.parseLong(id));
             return new ResponseEntity<>("ok", HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -67,7 +65,7 @@ public class PassengerController extends GeneralController<Passenger> {
     @RequestMapping(method = RequestMethod.GET, value = "/getRegularPassengers", produces = "text/plain")
     public ResponseEntity<String> regularPassengers() {
         try {
-            return new ResponseEntity<>(parseObjectList(passengerDAO.regularPassengers()), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(passengerService.regularPassengers()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

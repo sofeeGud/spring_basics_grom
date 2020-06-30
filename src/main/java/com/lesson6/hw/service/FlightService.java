@@ -2,10 +2,14 @@ package com.lesson6.hw.service;
 
 import com.lesson6.hw.BadRequestException;
 import com.lesson6.hw.dao.FlightDAO;
+import com.lesson6.hw.model.Filter;
 import com.lesson6.hw.model.Flight;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collection;
+@Transactional
 @Service
 public class FlightService {
     private FlightDAO flightDAO;
@@ -42,5 +46,21 @@ public class FlightService {
             throw new BadRequestException("Flight city from can not be empty");
         if (flight.getCityTo().equals(""))
             throw new BadRequestException("Flight city to can not be empty");
+    }
+
+    public Collection<Flight> mostPopularTo() {
+        return flightDAO.mostPopularTo();
+    }
+
+    public Collection<Flight> mostPopularFrom() {
+        return flightDAO.mostPopularFrom();
+    }
+
+    public Collection<Flight> flightsByDate(Filter filter)  {
+        return flightDAO.flightsByDate(filter);
+    }
+
+    public Flight findById(Long id) throws BadRequestException {
+       return flightDAO.findById(id);
     }
 }

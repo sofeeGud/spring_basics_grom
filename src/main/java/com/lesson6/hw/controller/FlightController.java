@@ -1,7 +1,6 @@
 package com.lesson6.hw.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lesson6.hw.dao.FlightDAO;
 import com.lesson6.hw.BadRequestException;
 import com.lesson6.hw.model.Filter;
 import com.lesson6.hw.model.Flight;
@@ -16,12 +15,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/flight")
 public class FlightController extends GeneralController<Flight> {
 
-    private FlightDAO flightDAO;
+
     private FlightService flightService;
 
     @Autowired
-    public FlightController(FlightDAO flightDAO, FlightService flightService) {
-        this.flightDAO = flightDAO;
+    public FlightController(FlightService flightService) {
         this.flightService = flightService;
     }
 
@@ -67,11 +65,10 @@ public class FlightController extends GeneralController<Flight> {
         }
     }
 
-
     @RequestMapping(method = RequestMethod.GET, value = "/mostPopularFrom")
     public ResponseEntity<String> mostPopularFrom() {
         try {
-            return new ResponseEntity<>(parseObjectList(flightDAO.mostPopularTo()), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(flightService.mostPopularTo()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,7 +77,7 @@ public class FlightController extends GeneralController<Flight> {
     @RequestMapping(method = RequestMethod.GET, value = "/mostPopularTo")
     public ResponseEntity<String> mostPopularTo() {
         try {
-            return new ResponseEntity<>(parseObjectList(flightDAO.mostPopularTo()), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(flightService.mostPopularTo()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -89,9 +86,10 @@ public class FlightController extends GeneralController<Flight> {
     @RequestMapping(method = RequestMethod.POST, value = "/findByFilter")
     public ResponseEntity<String> flightsByDate(@RequestBody Filter filter) {
         try {
-            return new ResponseEntity<>(parseObjectList(flightDAO.flightsByDate(filter)), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(flightService.flightsByDate(filter)), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 }

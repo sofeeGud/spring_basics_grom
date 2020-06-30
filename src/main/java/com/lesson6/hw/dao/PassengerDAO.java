@@ -5,12 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.Collection;
 import java.util.List;
 
 @Repository
-@Transactional
 public class PassengerDAO extends GeneralDAOImpl<Passenger> {
     private static final String SQL_REGULAR_PASSENGERS = "SELECT *\n" +
             "FROM PASSENGER\n" +

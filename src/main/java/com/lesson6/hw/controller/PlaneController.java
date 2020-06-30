@@ -17,12 +17,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 @RequestMapping(value = "/plane")
 public class PlaneController extends GeneralController<Plane> {
-    private PlaneDAO planeDAO;
     private PlaneService planeService;
 
     @Autowired
-    public PlaneController(PlaneDAO planeDAO, PlaneService planeService) {
-        this.planeDAO = planeDAO;
+    public PlaneController(PlaneService planeService) {
         this.planeService = planeService;
     }
 
@@ -58,7 +56,7 @@ public class PlaneController extends GeneralController<Plane> {
     @RequestMapping(method = RequestMethod.DELETE, value = "delete/{id}", produces = "text/plain")
     public ResponseEntity<String> delete(@PathVariable String id) {
         try {
-            planeDAO.delete(Long.parseLong(id));
+            planeService.delete(Long.parseLong(id));
             return new ResponseEntity<>("ok", HttpStatus.OK);
         } catch (BadRequestException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -71,7 +69,7 @@ public class PlaneController extends GeneralController<Plane> {
     @RequestMapping(method = RequestMethod.GET, value = "/getOldPlanes", produces = "text/plain")
     public ResponseEntity<String> oldPlanes() {
         try {
-            return new ResponseEntity<>(parseObjectList(planeDAO.oldPlanes()), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(planeService.oldPlanes()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -80,7 +78,7 @@ public class PlaneController extends GeneralController<Plane> {
     @RequestMapping(method = RequestMethod.GET, value = "/getRegularPlanes", produces = "text/plain")
     public ResponseEntity<String> regularPlanes() {
         try {
-            return new ResponseEntity<>(parseObjectList(planeDAO.regularPlanes()), HttpStatus.OK);
+            return new ResponseEntity<>(parseObjectList(planeService.regularPlanes()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -4,7 +4,7 @@ import com.lesson6.hw.BadRequestException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
+
 public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
 
     private Class<T> clazz;
@@ -16,7 +16,6 @@ public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
         this.clazz = clazzToSet;
     }
 
-    @Transactional
     @Override
     public T save(T t) throws BadRequestException {
         try {
@@ -27,7 +26,6 @@ public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
         }
     }
 
-    @Transactional
     @Override
     public T update(T t) throws BadRequestException {
         try {
@@ -47,7 +45,6 @@ public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
         }
     }
 
-    @Transactional
     @Override
     public void delete(long id) throws BadRequestException {
         try {

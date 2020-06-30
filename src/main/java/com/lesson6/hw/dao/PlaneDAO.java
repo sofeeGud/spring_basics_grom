@@ -5,11 +5,10 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.util.Collection;
+import java.util.List;
 
 @Repository
-@Transactional
 public class PlaneDAO extends GeneralDAOImpl<Plane> {
 
     private static final String SQL_OLD_PLANES = "SELECT * FROM PLANE WHERE EXTRACT(YEAR FROM current_date)-YEAR_PRODUCED >= 20";
@@ -28,10 +27,10 @@ public class PlaneDAO extends GeneralDAOImpl<Plane> {
 
 
     public Collection<Plane> oldPlanes() {
-        return null;
+        return (List<Plane>) entityManager.createNativeQuery(SQL_OLD_PLANES, Plane.class).getResultList();
     }
 
     public Collection<Plane> regularPlanes() {
-        return null;
+        return (List<Plane>) entityManager.createNativeQuery(SQL_REGULAR_PLANES, Plane.class).getResultList();
     }
 }
