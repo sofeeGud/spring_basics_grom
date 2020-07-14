@@ -17,7 +17,6 @@ public class FlightDAO extends GeneralDAOImpl<Flight> {
     @PersistenceContext
     private EntityManager entityManager;
 
-    private CriteriaBuilder criteriaBuilder;
 
     public Collection<Flight> mostPopularTo() {
         return (List<Flight>) entityManager.createNativeQuery("SELECT FLIGHT.*\n" +
