@@ -5,26 +5,25 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public class PassengerDAO extends GeneralDAOImpl<Passenger> {
-    private static final String SQL_REGULAR_PASSENGERS = "SELECT *\n" +
-            "FROM PASSENGER\n" +
-            "WHERE EXISTS (\n" +
-            "    SELECT  *\n" +
-            "    FROM    FLIGHT_PASSENGER fp\n" +
-            "       JOIN FLIGHT f ON fp.FLIGHT_ID = f.FLIGHT_ID\n" +
-            "    WHERE fp.PASSENGER_ID = PASSENGER.PASSENGER_ID\n" +
-            "    GROUP BY fp.PASSENGER_ID, EXTRACT(YEAR FROM f.DATE_FLIGHT)\n" +
-            "    HAVING COUNT(DISTINCT f.FLIGHT_ID) >= 25" +
+    private static final String SQL_REGULAR_PASSENGERS = "SELECT * " +
+            "FROM PASSENGER " +
+            "WHERE EXISTS ( " +
+            "    SELECT  * " +
+            "    FROM    FLIGHT_PASSENGER FP " +
+            "       JOIN FLIGHT F ON FP.FLIGHT_ID = F.FLIGHT_ID " +
+            "    WHERE FP.PASSENGER_ID = PASSENGER.PASSENGER_ID " +
+            "    GROUP BY FP.PASSENGER_ID, EXTRACT(YEAR FROM F.DATE_FLIGHT) " +
+            "    HAVING COUNT(DISTINCT F.FLIGHT_ID) >= 25" +
             ")";
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public Collection<Passenger> regularPassengers() {
+    public List<Passenger> regularPassengers() {
         return (List<Passenger>) entityManager.createNativeQuery(SQL_REGULAR_PASSENGERS, Passenger.class).getResultList();
     }
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Transactional
 @Service
@@ -20,22 +21,22 @@ public class PassengerService {
         this.passengerDAO = passengerDAO;
     }
 
-    public Passenger save(Passenger passenger) throws BadRequestException {
+    public Passenger save(Passenger passenger) throws Exception {
         passengerValidator(passenger);
         return passengerDAO.save(passenger);
     }
 
-    public Passenger update(Passenger passenger) throws BadRequestException {
+    public Passenger update(Passenger passenger) throws Exception {
         passengerValidator(passenger);
         return passengerDAO.update(passenger);
     }
 
-    public void delete(Long id) throws BadRequestException {
+    public void delete(Long id) throws Exception {
         passengerDAO.findById(id);
         passengerValidator(passengerDAO.findById(id));
     }
 
-    public Collection<Passenger> regularPassengers(){
+    public List<Passenger> regularPassengers(){
         return passengerDAO.regularPassengers();
     }
 

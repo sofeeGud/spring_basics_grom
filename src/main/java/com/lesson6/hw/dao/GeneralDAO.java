@@ -4,11 +4,11 @@ import com.lesson6.hw.BadRequestException;
 
 
 public interface GeneralDAO<T> {
-    T findById(long id) throws BadRequestException;
+    T findById(long id) throws BadRequestException, Exception;
 
-    T save(T t) throws BadRequestException;
+    T save(T t) throws Exception;
 
-    T update(T t) throws BadRequestException;
+    T update(T t) throws BadRequestException, Exception;
 
-    void delete(long id) throws BadRequestException;
+    void delete(long id) throws BadRequestException, Exception;
 }

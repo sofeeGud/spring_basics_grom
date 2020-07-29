@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
+
 @Transactional
 @Service
 public class FlightService {
@@ -20,17 +22,17 @@ public class FlightService {
     }
 
 
-    public Flight save(Flight flight) throws BadRequestException {
+    public Flight save(Flight flight) throws Exception {
         passengerValidator(flight);
         return flightDAO.save(flight);
     }
 
-    public Flight update(Flight flight) throws BadRequestException {
+    public Flight update(Flight flight) throws Exception {
         passengerValidator(flight);
         return flightDAO.update(flight);
     }
 
-    public void delete(Long id) throws BadRequestException {
+    public void delete(Long id) throws Exception {
         Flight flight = flightDAO.findById(id);
         passengerValidator(flight);
         flightDAO.delete(id);
@@ -48,19 +50,19 @@ public class FlightService {
             throw new BadRequestException("Flight city to can not be empty");
     }
 
-    public Collection<Flight> mostPopularTo() {
+    public List<Flight> mostPopularTo() {
         return flightDAO.mostPopularTo();
     }
 
-    public Collection<Flight> mostPopularFrom() {
+    public List<Flight> mostPopularFrom() {
         return flightDAO.mostPopularFrom();
     }
 
-    public Collection<Flight> flightsByDate(Filter filter)  {
+    public List<Flight> flightsByDate(Filter filter)  {
         return flightDAO.flightsByDate(filter);
     }
 
-    public Flight findById(Long id) throws BadRequestException {
+    public Flight findById(Long id) throws Exception {
        return flightDAO.findById(id);
     }
 }

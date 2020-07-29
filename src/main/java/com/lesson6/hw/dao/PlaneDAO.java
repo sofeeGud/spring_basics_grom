@@ -5,32 +5,31 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.util.Collection;
 import java.util.List;
 
 @Repository
 public class PlaneDAO extends GeneralDAOImpl<Plane> {
 
-    private static final String SQL_OLD_PLANES = "SELECT * FROM PLANE WHERE EXTRACT(YEAR FROM current_date)-YEAR_PRODUCED >= 20";
-    private static final String SQL_REGULAR_PLANES = "SELECT *\n" +
-            "FROM PLANE\n" +
-            "WHERE EXISTS(\n" +
-            "    SELECT *\n" +
-            "    FROM FLIGHT\n" +
-            "    WHERE FLIGHT.PLANE_ID = PLANE.PLANE_ID\n" +
-            "    GROUP BY FLIGHT.PLANE_ID, EXTRACT(YEAR FROM FLIGHT.DATE_FLIGHT)\n" +
-            "    HAVING COUNT(FLIGHT.FLIGHT_ID) >= 300\n" +
+    private static final String SQL_OLD_PLANES = "SELECT * FROM PLANE WHERE EXTRACT(YEAR FROM CURRENT_DATE)-YEAR_PRODUCED >= 20";
+    private static final String SQL_REGULAR_PLANES = "SELECT * " +
+            "FROM PLANE " +
+            "WHERE EXISTS( " +
+            "    SELECT * " +
+            "    FROM FLIGHT " +
+            "    WHERE FLIGHT.PLANE_ID = PLANE.PLANE_ID " +
+            "    GROUP BY FLIGHT.PLANE_ID, EXTRACT(YEAR FROM FLIGHT.DATE_FLIGHT) " +
+            "    HAVING COUNT(FLIGHT.FLIGHT_ID) >= 300 " +
             ")";
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
-    public Collection<Plane> oldPlanes() {
+    public List<Plane> oldPlanes() {
         return (List<Plane>) entityManager.createNativeQuery(SQL_OLD_PLANES, Plane.class).getResultList();
     }
 
-    public Collection<Plane> regularPlanes() {
+    public List<Plane> regularPlanes() {
         return (List<Plane>) entityManager.createNativeQuery(SQL_REGULAR_PLANES, Plane.class).getResultList();
     }
 }

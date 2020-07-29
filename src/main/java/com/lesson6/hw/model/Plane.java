@@ -13,7 +13,7 @@ import java.util.Date;
 @ToString
 @EqualsAndHashCode
 @Entity
-@Table(name = "PLANE")
+@Table(name = "C")
 public class Plane {
     @Id
     @Column(name = "ID")

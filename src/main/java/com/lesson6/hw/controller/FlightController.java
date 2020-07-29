@@ -31,8 +31,6 @@ public class FlightController extends GeneralController<Flight> {
             Flight flight = mapper.readValue(json, Flight.class);
             flightService.save(flight);
             return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (BadRequestException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -45,8 +43,6 @@ public class FlightController extends GeneralController<Flight> {
             Flight flight = mapper.readValue(json, Flight.class);
             flightService.update(flight);
             return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (BadRequestException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -57,8 +53,6 @@ public class FlightController extends GeneralController<Flight> {
         try {
             flightService.delete(Long.parseLong(id));
             return new ResponseEntity<>("ok", HttpStatus.OK);
-        } catch (BadRequestException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

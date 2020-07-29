@@ -1,6 +1,5 @@
 package com.lesson6.hw.dao;
 
-import com.lesson6.hw.BadRequestException;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,40 +16,40 @@ public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
     }
 
     @Override
-    public T save(T t) throws BadRequestException {
+    public T save(T t) throws Exception {
         try {
             entityManager.persist(t);
             return t;
         } catch (Exception e) {
-            throw new BadRequestException("Save : " + t + " failed" + e.getMessage());
+            throw new Exception("Save : " + t + " failed" + e.getMessage());
         }
     }
 
     @Override
-    public T update(T t) throws BadRequestException {
+    public T update(T t) throws Exception {
         try {
             entityManager.merge(t);
             return t;
         } catch (Exception e) {
-            throw new BadRequestException("Update : " + t + " failed" + e.getMessage());
+            throw new Exception("Update : " + t + " failed" + e.getMessage());
         }
     }
 
     @Override
-    public T findById(long id) throws BadRequestException {
+    public T findById(long id) throws Exception {
         try {
             return entityManager.find(clazz, id);
         } catch (Exception e) {
-            throw new BadRequestException("Find : " + id + " failed" + e.getMessage());
+            throw new Exception("Find : " + id + " failed" + e.getMessage());
         }
     }
 
     @Override
-    public void delete(long id) throws BadRequestException {
+    public void delete(long id) throws Exception {
         try {
             entityManager.remove(findById(id));
         } catch (Exception e) {
-            throw new BadRequestException("Delete : " + id + " failed" + e.getMessage());
+            throw new Exception("Delete : " + id + " failed" + e.getMessage());
         }
 
     }

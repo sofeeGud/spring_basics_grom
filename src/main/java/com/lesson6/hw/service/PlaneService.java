@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
+import java.util.List;
 
 @Transactional
 @Service
@@ -19,17 +20,17 @@ public class PlaneService {
         this.planeDAO = planeDAO;
     }
 
-    public Plane save(Plane plane) throws BadRequestException {
+    public Plane save(Plane plane) throws Exception {
         planeValidator(plane);
         return planeDAO.save(plane);
     }
 
-    public Plane update(Plane plane) throws BadRequestException {
+    public Plane update(Plane plane) throws Exception {
         planeValidator(plane);
         return planeDAO.update(plane);
     }
 
-    public void delete(Long id) throws BadRequestException {
+    public void delete(Long id) throws Exception {
         Plane plane = planeDAO.findById(id);
         planeValidator(plane);
         planeDAO.delete(id);
@@ -42,11 +43,11 @@ public class PlaneService {
             throw new BadRequestException("Plane code can not be empty");
     }
 
-    public Collection<Plane> oldPlanes() {
+    public List<Plane> oldPlanes() {
         return planeDAO.oldPlanes();
     }
 
-    public Collection<Plane> regularPlanes() {
+    public List<Plane> regularPlanes() {
         return planeDAO.regularPlanes();
     }
 }
