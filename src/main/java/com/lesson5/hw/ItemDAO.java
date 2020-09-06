@@ -1,3 +1,4 @@
+/*
 package com.lesson5.hw;
 
 import org.springframework.stereotype.Repository;
@@ -46,3 +47,4 @@ public class ItemDAO {
         }
     }
 }
+*/

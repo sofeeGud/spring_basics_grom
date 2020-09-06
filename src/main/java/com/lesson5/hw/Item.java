@@ -1,3 +1,4 @@
+/*
 package com.lesson5.hw;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -32,3 +33,4 @@ public class Item {
         this.description = description;
     }
 }
+*/

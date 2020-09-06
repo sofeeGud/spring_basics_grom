@@ -1,3 +1,4 @@
+/*
 package com.lesson5.hw;
 
 
@@ -49,7 +50,7 @@ public class ItemController {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "delete", produces = "text/plain")
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete/{id}", produces = "text/plain")
     public ResponseEntity<String> delete(@PathVariable String id) {
         try {
             itemDAO.delete(Long.parseLong(id));
@@ -62,4 +63,4 @@ public class ItemController {
         }
     }
 
-}
+}*/

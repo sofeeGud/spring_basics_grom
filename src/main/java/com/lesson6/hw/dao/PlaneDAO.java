@@ -21,10 +21,6 @@ public class PlaneDAO extends GeneralDAOImpl<Plane> {
             "    HAVING COUNT(FLIGHT.FLIGHT_ID) >= 300 " +
             ")";
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
-
     public List<Plane> oldPlanes() {
         return (List<Plane>) entityManager.createNativeQuery(SQL_OLD_PLANES, Plane.class).getResultList();
     }

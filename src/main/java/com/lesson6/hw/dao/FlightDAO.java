@@ -14,9 +14,6 @@ import java.util.List;
 @Repository
 public class FlightDAO extends GeneralDAOImpl<Flight> {
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     private static final String SQL_MOST_POPULAR_TO ="SELECT FLIGHT.* " +
             "FROM FLIGHT " +
             "LEFT JOIN ( " +
@@ -57,37 +54,14 @@ public class FlightDAO extends GeneralDAOImpl<Flight> {
     }
 
     public List<Flight> flightsByDate(Filter filter) {
-       /* CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Flight> criteriaQuery = cb.createQuery(Flight.class);
-        Root<Flight> flightRoot = criteriaQuery.from(Flight.class);
-        Join<Flight, Plane> planes = flightRoot.join("plane");
 
-        criteriaQuery.select(flightRoot);
-
-        Predicate criteria = cb.conjunction();
-        //CityFrom
-        if (filter.getCityFrom() != null)
-            criteria = cb.and(criteria, cb.equal(flightRoot.get("cityFrom"), filter.getCityFrom()));
-        //CityTo
-        if (filter.getCityTo() != null)
-            criteria = cb.and(criteria, cb.equal(flightRoot.get("cityTo"), filter.getCityTo()));
-        //Dates
-        if (filter.getDateFrom() != null && filter.getDateTo() != null)
-            criteria = cb.and(criteria, cb.between(flightRoot.get("dateFlight"), filter.getDateFrom(), filter.getDateTo()));
-        //Plane
-        if (filter.getPlaneModel() != null)
-            criteria = cb.and(criteria, cb.equal(planes.get("model"), filter.getPlaneModel()));
-
-        criteriaQuery.where(criteria);
-        return entityManager.createQuery(criteriaQuery).getResultList();*/
-
-        Query query= entityManager.createNativeQuery(SQL_FLIGHTS_BY_DATE, Flight.class);
-        query.setParameter("city_from", filter.getCityFrom());
-        query.setParameter("city_to", filter.getCityTo());
-        query.setParameter("date_from", filter.getDateFrom());
-        query.setParameter("date_to", filter.getDateTo());
-        query.setParameter("model", filter.getPlaneModel());
-        return query.getResultList();
+        return entityManager.createQuery (SQL_FLIGHTS_BY_DATE, Flight.class).
+        setParameter("city_from", filter.getCityFrom()).
+        setParameter("city_to", filter.getCityTo()).
+        setParameter("date_from", filter.getDateFrom()).
+        setParameter("date_to", filter.getDateTo()).
+        setParameter("model", filter.getPlaneModel()).
+        getResultList();
     }
 
 }

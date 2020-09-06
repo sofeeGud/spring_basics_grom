@@ -9,7 +9,7 @@ public abstract class GeneralDAOImpl<T> implements GeneralDAO<T> {
     private Class<T> clazz;
 
     @PersistenceContext
-    private EntityManager entityManager;
+    EntityManager entityManager;
 
     final void setClazz(Class<T> clazzToSet) {
         this.clazz = clazzToSet;

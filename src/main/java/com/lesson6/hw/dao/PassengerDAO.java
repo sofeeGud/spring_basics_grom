@@ -20,9 +20,6 @@ public class PassengerDAO extends GeneralDAOImpl<Passenger> {
             "    HAVING COUNT(DISTINCT F.FLIGHT_ID) >= 25" +
             ")";
 
-    @PersistenceContext
-    private EntityManager entityManager;
-
     public List<Passenger> regularPassengers() {
         return (List<Passenger>) entityManager.createNativeQuery(SQL_REGULAR_PASSENGERS, Passenger.class).getResultList();
     }

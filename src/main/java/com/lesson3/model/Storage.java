@@ -1,16 +1,10 @@
 package com.lesson3.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+
 
 import javax.persistence.*;
 
-
-@ToString
-@EqualsAndHashCode
 @Entity
 @Table(name = "STORAGE")
 public class Storage {

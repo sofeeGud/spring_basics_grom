@@ -11,9 +11,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Arrays;
+
 @Controller
 @RequestMapping(value = "/passenger")
-public class PassengerController extends GeneralController<Passenger> {
+public class PassengerController {
     private PassengerService passengerService;
 
     @Autowired
@@ -21,7 +23,7 @@ public class PassengerController extends GeneralController<Passenger> {
         this.passengerService = passengerService;
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/save", produces = "text/plain")
+    @PostMapping(value = "/save", produces = "text/plain")
     public ResponseEntity<String> save(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -33,7 +35,7 @@ public class PassengerController extends GeneralController<Passenger> {
         }
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "update", produces = "text/plain")
+    @PutMapping(value = "update", produces = "text/plain")
     public ResponseEntity<String> update(@RequestBody String json) {
         try {
             ObjectMapper mapper = new ObjectMapper();
@@ -46,7 +48,7 @@ public class PassengerController extends GeneralController<Passenger> {
         }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "delete/{id}", produces = "text/plain")
+    @DeleteMapping(value = "delete/{id}", produces = "text/plain")
     public ResponseEntity<String> delete(@PathVariable String id) {
         try {
             passengerService.delete(Long.parseLong(id));
@@ -57,10 +59,10 @@ public class PassengerController extends GeneralController<Passenger> {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/getRegularPassengers", produces = "text/plain")
+    @GetMapping(value = "/getRegularPassengers", produces = "text/plain")
     public ResponseEntity<String> regularPassengers() {
         try {
-            return new ResponseEntity<>(parseObjectList(passengerService.regularPassengers()), HttpStatus.OK);
+            return new ResponseEntity<>(Arrays.toString(passengerService.regularPassengers().toArray()), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
