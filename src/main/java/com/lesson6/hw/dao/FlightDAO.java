@@ -55,7 +55,7 @@ public class FlightDAO extends GeneralDAOImpl<Flight> {
 
     public List<Flight> flightsByDate(Filter filter) {
 
-        return entityManager.createQuery (SQL_FLIGHTS_BY_DATE, Flight.class).
+        return (List<Flight>) entityManager.createQuery (SQL_FLIGHTS_BY_DATE, Flight.class).
         setParameter("city_from", filter.getCityFrom()).
         setParameter("city_to", filter.getCityTo()).
         setParameter("date_from", filter.getDateFrom()).
